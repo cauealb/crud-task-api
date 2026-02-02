@@ -5,8 +5,16 @@ const database = new DataBase()
 
 export const Routes = [
     {
+        method: 'GET',
+        url: '/tasks',
+        handler: (req, res) => {
+            const tasks = database.select('tasks');
+            res.writeHead(200).end(JSON.stringify(tasks));
+        }
+    },
+    {
         method: 'POST',
-        url: '/task',
+        url: '/tasks',
         handler: (req, res) => {
             const { title, description } = req.body;
 
@@ -19,18 +27,9 @@ export const Routes = [
                 updated_at: null
             }
 
-            database.insert('task', task);
+            database.insert('tasks', task);
 
-            res.writeHead(201).end("Usuário criado com sucesso!")
-        }
-    },
-    {
-        method: 'GET',
-        url: '/task',
-        handler: (req, res) => {
-
-
-            res.writeHead(200).end();
+            res.writeHead(201).end("Task criado com sucesso!")
         }
     },
     {}
