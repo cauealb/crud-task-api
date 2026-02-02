@@ -24,6 +24,14 @@ export const Routes = [
             res.writeHead(201).end("Usuário criado com sucesso!")
         }
     },
-    {},
+    {
+        method: 'GET',
+        url: '/task',
+        handler: (req, res) => {
+
+
+            res.writeHead(200).end();
+        }
+    },
     {}
 ]
