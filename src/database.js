@@ -8,7 +8,7 @@ export class DataBase {
     constructor() {
         fs.readFile(dbPath, 'utf8')
             .then(data => {
-                this.#database = data;
+                this.#database = JSON.parse(data);
             })
             .catch(() => {
                 this.#persist();
@@ -17,5 +17,15 @@ export class DataBase {
 
     #persist() {
         fs.writeFile(dbPath, JSON.stringify(this.#database));
+    }
+
+    insert(table, task) {
+        if(Array.isArray(this.#database[table])) {
+            this.#database[table].push(task);
+        } else {
+            this.#database[table] = [task];
+        }
+
+        this.#persist();
     }
 }
