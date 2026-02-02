@@ -9,7 +9,7 @@ const server = http.createServer(async(req, res) => {
         return;
     })
 
-    res.writeHead(404).end("Olá");
+    res.writeHead(404).end("Rota não indentificada!");
 })
 
 server.listen(3434);
