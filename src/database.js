@@ -19,6 +19,11 @@ export class DataBase {
         fs.writeFile(dbPath, JSON.stringify(this.#database));
     }
 
+    select(table) {
+        const tasks = this.#database[table];
+        return tasks;
+    }
+
     insert(table, task) {
         if(Array.isArray(this.#database[table])) {
             this.#database[table].push(task);
