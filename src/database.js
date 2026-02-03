@@ -20,12 +20,14 @@ export class DataBase {
     }
 
     select(table, query) {
-        console.log(query)
-        const tasks = this.#database[table];
+        const { title, description } = query;
+        let tasks = this.#database[table];
 
-        tasks = tasks.find(task => {
-            
-        })
+        if (title || description) {
+            tasks = tasks.filter(task => {
+                return title ? task.title.toLowerCase().includes(title.toLowerCase()) : true && description ? task.description.toLowerCase().includes(description.toLowerCase()) : true
+            })
+        }
 
         return tasks;
     }
