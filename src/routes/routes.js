@@ -1,12 +1,13 @@
 import { DataBase } from "../database.js"
 import { randomUUID } from 'node:crypto'
+import { BuildRouteParams } from "../utils/build-route-params.js"
 
 const database = new DataBase()
 
 export const Routes = [
     {
         method: 'GET',
-        url: '/tasks',
+        url: BuildRouteParams('/tasks'),
         handler: (req, res) => {
             const tasks = database.select('tasks');
             res.writeHead(200).end(JSON.stringify(tasks));
@@ -14,7 +15,7 @@ export const Routes = [
     },
     {
         method: 'POST',
-        url: '/tasks',
+        url: BuildRouteParams('/tasks'),
         handler: (req, res) => {
             const { title, description } = req.body;
 
@@ -34,7 +35,7 @@ export const Routes = [
     },
     {
         method: 'DELETE',
-        url: '/tasks/:id',
+        url: BuildRouteParams('/tasks/:id'),
         handler: (req, res) => {
 
             res.writeHead(204).end('Olaaaa');
