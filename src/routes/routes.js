@@ -65,5 +65,20 @@ export const Routes = [
 
             res.writeHead(404).end("Esse ID não existe no banco de dados!");
         }
+    },
+    {
+        method: 'PATCH',
+        url: BuildRouteParams('/tasks/:id/completedat'),
+        handler: (req, res) => {
+            const { id } = req.params;
+            const answer = database.atualizar_status_completado('tasks', id);
+
+            if (answer) {
+                res.writeHead(204).end();
+                return
+            }
+
+            res.writeHead(404).end("Esse ID não existe no banco de dados!")
+        }
     }
 ]
