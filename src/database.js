@@ -19,8 +19,14 @@ export class DataBase {
         fs.writeFile(dbPath, JSON.stringify(this.#database));
     }
 
-    select(table) {
+    select(table, query) {
+        console.log(query)
         const tasks = this.#database[table];
+
+        tasks = tasks.find(task => {
+            
+        })
+
         return tasks;
     }
 
