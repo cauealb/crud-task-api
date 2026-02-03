@@ -47,5 +47,12 @@ export const Routes = [
 
             res.writeHead(404).end('Esse ID não existe no banco de dados!');
         }
+    },
+    {
+        method: 'PUT',
+        url: '/tasks/:id',
+        handler: (req, res) => {
+            
+        }
     }
 ]
