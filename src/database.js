@@ -19,8 +19,16 @@ export class DataBase {
         fs.writeFile(dbPath, JSON.stringify(this.#database));
     }
 
-    select(table) {
-        const tasks = this.#database[table];
+    select(table, query) {
+        const { title, description } = query;
+        let tasks = this.#database[table];
+
+        if (title || description) {
+            tasks = tasks.filter(task => {
+                return title ? task.title.toLowerCase().includes(title.toLowerCase()) : true && description ? task.description.toLowerCase().includes(description.toLowerCase()) : true
+            })
+        }
+
         return tasks;
     }
 
