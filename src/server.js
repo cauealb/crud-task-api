@@ -1,6 +1,7 @@
 import http from 'node:http';
 import { Middleware } from './middleware/middleware.js';
 import { Routes } from './routes/routes.js';
+import { ExtractQuery } from './utils/extract-query.js';
 
 const server = http.createServer(async(req, res) => {
     const { method, url } = req;
@@ -12,11 +13,10 @@ const server = http.createServer(async(req, res) => {
 
     if(route) {
         const routeParams = req.url.match(route.url)
-        const { id, ...params } = routeParams.groups
+        const { query, ...params } = routeParams.groups
 
-        req.params = id;
-        req.query = params ? null : null;
-
+        req.params = params;
+        req.query = query ? ExtractQuery(query) : null;
 
         return route.handler(req, res);
     }
