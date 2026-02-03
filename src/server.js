@@ -7,10 +7,17 @@ const server = http.createServer(async(req, res) => {
     await Middleware(req, res);
 
     const route = Routes.find(index => {
-        return index.method === method && index.url === url;
+        return index.method === method && index.url.test(url);
     })
 
     if(route) {
+        const routeParams = req.url.match(route.url)
+        const { id, ...params } = routeParams.groups
+
+        req.params = id;
+        req.query = params ? null : null;
+
+
         return route.handler(req, res);
     }
 

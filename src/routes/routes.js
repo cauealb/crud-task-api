@@ -37,6 +37,14 @@ export const Routes = [
         method: 'DELETE',
         url: BuildRouteParams('/tasks/:id'),
         handler: (req, res) => {
+            // 1 - Req, e Res
+            // 2 - Deletar o id que vem no routes da requisição
+            // 3 - id precisar estar no req
+            // 4 - Id deletado com sucesso
+
+            // Pegar o id na req
+            // Jogar no método para deletar task
+            // Se der erro, acione
 
             res.writeHead(204).end('Olaaaa');
         }
