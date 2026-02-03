@@ -61,7 +61,7 @@ export class DataBase {
             ...this.#database[table][index],
             title: data.title ? data.title : this.#database[table][index].title,
             description: data.description ? data.description : this.#database[table][index].description,
-            updated_at: new Date().toLocaleDateString('pt-BR'),
+            updated_at: new Date().toLocaleString('pt-BR'),
         }
 
         if (index > -1) {
@@ -77,7 +77,7 @@ export class DataBase {
         const index = this.#database[table].findIndex(task => task.id === id);
 
         if (index > -1) {
-            this.#database[table][index].completed_at =  new Date().toLocaleDateString('pt-BR');
+            this.#database[table][index].completed_at =  new Date().toLocaleString('pt-BR');
             this.#persist();
             return true;
         }

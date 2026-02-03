@@ -24,7 +24,7 @@ export const Routes = [
                 title, 
                 description, 
                 completed_at: null,
-                created_at: new Date().toLocaleDateString('pt-BR'),
+                created_at: new Date().toLocaleString('pt-BR'),
                 updated_at: null
             }
 
