@@ -32,5 +32,12 @@ export const Routes = [
             res.writeHead(201).end("Task criado com sucesso!")
         }
     },
-    {}
+    {
+        method: 'DELETE',
+        url: '/tasks/:id',
+        handler: (req, res) => {
+
+            res.writeHead(204).end('Olaaaa');
+        }
+    }
 ]
