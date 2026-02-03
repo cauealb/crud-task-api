@@ -66,14 +66,6 @@ export class DataBase {
     }
 
     atualizar_status_completado(table, id) {
-        // 1 - Table e id
-        // 2 - Procurar se existe esse id, se tiver, atualizar o campo de completado e persistir no banco de dados
-        // 3 - Persistir no banco de dados e atualizar uma unica propriedade
-        // 4 - Task Atualizada
-
-        // Verificar se o id existe no array - x
-        // Se existir, Atulizar propriedade, se não tiver, informar - x
-
         const index = this.#database[table].findIndex(task => task.id === id);
 
         if (index > -1) {
