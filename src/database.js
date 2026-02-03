@@ -44,4 +44,23 @@ export class DataBase {
 
         return false;
     }
+
+    atualizar(table, data) {
+        const index = this.#database[table].findIndex(task => task.id === data.id);
+
+        const newTask = {
+            ...this.#database[table][index],
+            title: data.title ? data.title : this.#database[table][index].title,
+            description: data.description ? data.description : this.#database[table][index].description,
+            updated_at: new Date().toLocaleDateString('pt-BR'),
+        }
+
+        if (index > -1) {
+            this.#database[table][index] = newTask;
+            this.#persist()
+            return true;
+        }
+
+        return false;
+    }
 }
