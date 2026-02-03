@@ -77,7 +77,9 @@ export class DataBase {
         const index = this.#database[table].findIndex(task => task.id === id);
 
         if (index > -1) {
-            this.#database[table][index].completed_at =  new Date().toLocaleString('pt-BR');
+            const date = this.#database[table][index].completed_at
+
+            this.#database[table][index].completed_at = date ? null : new Date().toLocaleString('pt-BR');
             this.#persist();
             return true;
         }
