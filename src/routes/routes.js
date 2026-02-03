@@ -50,9 +50,20 @@ export const Routes = [
     },
     {
         method: 'PUT',
-        url: '/tasks/:id',
+        url: BuildRouteParams('/tasks/:id'),
         handler: (req, res) => {
-            
+            const { id } = req.params;
+            const { title, description} = req.body;
+            const task = { id, title, description }
+
+            const answer = database.atualizar('tasks', task);
+
+            if (answer) {
+                res.writeHead(204).end();
+                return;
+            }
+
+            res.writeHead(404).end("Esse ID não existe no banco de dados!");
         }
     }
 ]

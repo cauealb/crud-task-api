@@ -45,19 +45,19 @@ export class DataBase {
         return false;
     }
 
-    atualizar(table, id, data) {
-        // 1 - Tabela, id e data
-        // 2 - Atulizar a task conforme o que vem da body
-        // 3 - Se não achar o id, informar
-        // 4 - Task atualizada
+    atualizar(table, data) {
+        const index = this.#database[table].findIndex(task => task.id === data.id);
 
-        // Verificar se o id está no array - x
-        // Se tiver, atuliza, se não informa
-
-        const index = this.#database[table].findIndex(task => task.id === id);
+        const newTask = {
+            ...this.#database[table][index],
+            title: data.title ? data.title : this.#database[table][index].title,
+            description: data.description ? data.description : this.#database[table][index].description,
+            updated_at: new Date().toLocaleDateString('pt-BR'),
+        }
 
         if (index > -1) {
-            this.#database[table][index] = data;
+            this.#database[table][index] = newTask;
+            this.#persist()
             return true;
         }
 
