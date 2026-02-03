@@ -35,7 +35,7 @@ export class DataBase {
     }
 
     delete(table, id) {
-        const index = this.#database[table].findIndex(i => i.id === id);
+        const index = this.#database[table].findIndex(task => task.id === id);
 
         if(index > -1) {
             this.#database[table].splice(index, 1);

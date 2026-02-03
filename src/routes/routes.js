@@ -37,16 +37,15 @@ export const Routes = [
         method: 'DELETE',
         url: BuildRouteParams('/tasks/:id'),
         handler: (req, res) => {
-            // 1 - Req, e Res
-            // 2 - Deletar o id que vem no routes da requisição
-            // 3 - id precisar estar no req
-            // 4 - Id deletado com sucesso
+            const { id } = req.params;
+            const answer = database.delete('tasks', id);
 
-            // Pegar o id na req
-            // Jogar no método para deletar task
-            // Se der erro, acione
+            if (answer) {
+                res.writeHead(204).end()
+                return;
+            }
 
-            res.writeHead(204).end('Olaaaa');
+            res.writeHead(404).end('Esse ID não existe no banco de dados!');
         }
     }
 ]
