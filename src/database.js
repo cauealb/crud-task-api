@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import fs from 'node:fs/promises';
 
 const dbPath = new URL('db.json', import.meta.url)
@@ -21,7 +22,7 @@ export class DataBase {
 
     select(table, query) {
         const { title, description } = query;
-        let tasks = this.#database[table];
+        let tasks = this.#database[table]; 
 
         if (title || description) {
             tasks = tasks.filter(task => {
@@ -33,13 +34,22 @@ export class DataBase {
     }
 
     insert(table, task) {
+
+        const data = { 
+            id: randomUUID(),
+            ...task,
+            completed_at: null,
+            created_at: new Date().toLocaleString('pt-BR'),
+            updated_at: null
+        } 
+
         if(Array.isArray(this.#database[table])) {
-            this.#database[table].push(task);
+            this.#database[table].push(data);
         } else {
-            this.#database[table] = [task];
+            this.#database[table] = [data];
         }
 
-        this.#persist();
+        this.#persist(); 
     }
 
     delete(table, id) {

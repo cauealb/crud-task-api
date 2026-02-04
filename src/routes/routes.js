@@ -1,8 +1,8 @@
 import { DataBase } from "../database.js"
-import { randomUUID } from 'node:crypto'
 import { BuildRouteParams } from "../utils/build-route-params.js"
+import { ImportCSV } from "../streams/import-csv.js"
 
-const database = new DataBase()
+export const database = new DataBase();
 
 export const Routes = [
     {
@@ -16,21 +16,20 @@ export const Routes = [
     {
         method: 'POST',
         url: BuildRouteParams('/tasks'),
-        handler: (req, res) => {
-            const { title, description } = req.body;
+        handler: async (req, res) => {
 
-            const task = {
-                id: randomUUID(),
-                title, 
-                description, 
-                completed_at: null,
-                created_at: new Date().toLocaleString('pt-BR'),
-                updated_at: null
+            if (req.body) {
+                const { title, description } = req.body;
+                const task = { title, description }
+                
+                database.insert('tasks', task);
+                res.writeHead(201).end("Task criado com sucesso!")
+            } else {
+
+                await ImportCSV()
+                res.writeHead(201).end("Tasks criadas com sucesso!");
+                return;
             }
-
-            database.insert('tasks', task);
-
-            res.writeHead(201).end("Task criado com sucesso!")
         }
     },
     {
