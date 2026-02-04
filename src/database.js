@@ -64,7 +64,7 @@ export class DataBase {
         return false;
     }
 
-    atualizar(table, data) {
+    update(table, data) {
         const index = this.#database[table].findIndex(task => task.id === data.id);
 
         const newTask = {
@@ -83,7 +83,7 @@ export class DataBase {
         return false;
     }
 
-    atualizar_status_completado(table, id) {
+    updateCompletedStatus(table, id) {
         const index = this.#database[table].findIndex(task => task.id === id);
 
         if (index > -1) {
