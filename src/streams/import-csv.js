@@ -1,8 +1,8 @@
 import { parse } from "csv-parse";
 import fs from 'node:fs';
-import { database } from "../routes/routes.js";
+import { database, Routes } from "../routes/routes.js";
 
-export async function ImportCSV() {
+export async function ImportCSV(req, res) {
     const strems = fs.createReadStream('CSV 2.0.csv');
 
     const parser = parse({
@@ -15,14 +15,12 @@ export async function ImportCSV() {
 
     })
 
+    const route = Routes.find(route => route.method === 'POST');
+
     for await(const chunk of strems.pipe(parser)) {
-        await new Promise(resolve => { 
-            setTimeout(() => {
-                database.insert('tasks', chunk)
-                resolve();
-            }, 100)
-        })
+        req.body = chunk;
+        route.handler(req, res)
     }
 
-    return false;
+    return true;
 }

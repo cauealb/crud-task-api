@@ -17,25 +17,40 @@ export const Routes = [
         method: 'POST',
         url: BuildRouteParams('/tasks'),
         handler: async (req, res) => {
+            // 1 - Req e Res
+            // 2 - Essa é uma rota POST, vou criar tasks
+            // 3 - Independente se for um arquivo enviado ou uma task, aqui será criada a task
+            // 4 - Task criada
 
-            if (req.body) {
+            // Se for arquivo envido, jogar na função que lê o arquivo
+            // Se for uma task, já enviar para o db e criar a task
+
+            let routineFinish;
+
+            if (!req.body) { 
+                // Enviou arquivo
+
+                routineFinish = false;
+                routineFinish = await ImportCSV(req, res);
+
+            } else {
+                routineFinish = true;
                 const { title, description } = req.body;
-                
+            
                 if (!title || !description) {
                     res.writeHead(400).end("Dados para criação da task faltando");
                     return
                 }
 
                 const task = { title, description }
-                
                 database.insert('tasks', task);
-                res.writeHead(201).end("Task criado com sucesso!")
-            } else {
-
-                await ImportCSV()
-                res.writeHead(201).end("Tasks criadas com sucesso!");
-                return;
+                
             }
+            
+            if (routineFinish) {
+                res.writeHead(201).end("Task criado com sucesso!")
+            }
+            
         }
     },
     {
