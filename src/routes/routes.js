@@ -18,25 +18,19 @@ export const Routes = [
         method: 'POST',
         url: BuildRouteParams('/tasks'),
         handler: async (req, res) => {
+
             if (req.body) {
                 const { title, description } = req.body;
-
-                const task = {
-                    id: randomUUID(),
-                    title, 
-                    description, 
-                    completed_at: null,
-                    created_at: new Date().toLocaleString('pt-BR'),
-                    updated_at: null
-                }
+                const task = { title, description }
+                
+                database.insert('tasks', task);
+                res.writeHead(201).end("Task criado com sucesso!")
             } else {
 
                 await ImportCSV()
+                res.writeHead(201).end("Tasks criadas com sucesso!");
+                return;
             }
-
-            database.insert('tasks', task);
-
-            res.writeHead(201).end("Task criado com sucesso!")
         }
     },
     {

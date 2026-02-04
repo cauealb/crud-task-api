@@ -1,5 +1,8 @@
 import { parse } from "csv-parse";
 import fs from 'node:fs';
+import { DataBase } from "../database.js";
+
+const database = new DataBase();
 
 export async function ImportCSV() {
     const strems = fs.createReadStream('CSV 2.0.csv');
@@ -12,6 +15,8 @@ export async function ImportCSV() {
     })
 
     for await(const chunk of strems.pipe(parser)) {
-        console.log(chunk);
+        database.insert('tasks', {...chunk })
     }
+
+    return false;
 }
