@@ -30,7 +30,6 @@ export class DataBase {
             })
         }
 
-        console.log(tasks, title, description) 
         return tasks;
     }
 

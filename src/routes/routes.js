@@ -2,7 +2,7 @@ import { DataBase } from "../database.js"
 import { BuildRouteParams } from "../utils/build-route-params.js"
 import { ImportCSV } from "../streams/import-csv.js"
 
-const database = new DataBase()
+export const database = new DataBase();
 
 export const Routes = [
     {
