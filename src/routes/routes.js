@@ -74,6 +74,12 @@ export const Routes = [
         handler: (req, res) => {
             const { id } = req.params;
             const { title, description} = req.body;
+
+            if (!title || !description) {
+                res.writeHead(400).end("Dados para atualização da task faltando");
+                return
+            }
+
             const task = { id, title, description }
 
             const answer = database.atualizar('tasks', task);
