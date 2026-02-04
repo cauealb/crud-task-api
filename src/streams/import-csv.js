@@ -10,11 +10,13 @@ export async function ImportCSV() {
         trim: true,
         columns: true,
         skip_empty_lines: true,
+        columns: header =>
+            header.map(col => col.replace(/^\uFEFF/, '')),
 
     })
 
     for await(const chunk of strems.pipe(parser)) {
-        await new Promise(resolve => {
+        await new Promise(resolve => { 
             setTimeout(() => {
                 database.insert('tasks', chunk)
                 resolve();
