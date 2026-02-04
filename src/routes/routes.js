@@ -20,6 +20,12 @@ export const Routes = [
 
             if (req.body) {
                 const { title, description } = req.body;
+                
+                if (!title || !description) {
+                    res.writeHead(400).end("Dados para criação da task faltando");
+                    return
+                }
+
                 const task = { title, description }
                 
                 database.insert('tasks', task);
