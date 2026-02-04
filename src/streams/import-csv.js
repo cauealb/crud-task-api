@@ -11,11 +11,18 @@ export async function ImportCSV() {
         delimiter: ';',
         trim: true,
         columns: true,
-        skip_empty_lines: true
+        skip_empty_lines: true,
+
     })
 
     for await(const chunk of strems.pipe(parser)) {
-        database.insert('tasks', {...chunk })
+        await new Promise(resolve => {
+            setTimeout(() => {
+                console.log('ola') 
+                database.insert('tasks', chunk) 
+                resolve();
+            }, 500);
+        })
     }
 
     return false;

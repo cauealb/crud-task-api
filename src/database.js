@@ -22,7 +22,7 @@ export class DataBase {
 
     select(table, query) {
         const { title, description } = query;
-        let tasks = this.#database[table];
+        let tasks = this.#database[table]; 
 
         if (title || description) {
             tasks = tasks.filter(task => {
@@ -30,18 +30,19 @@ export class DataBase {
             })
         }
 
+        console.log(tasks, title, description) 
         return tasks;
     }
 
     insert(table, task) {
 
-        const data = {
+        const data = { 
             id: randomUUID(),
             ...task,
             completed_at: null,
             created_at: new Date().toLocaleString('pt-BR'),
             updated_at: null
-        }
+        } 
 
         if(Array.isArray(this.#database[table])) {
             this.#database[table].push(data);
@@ -49,7 +50,7 @@ export class DataBase {
             this.#database[table] = [data];
         }
 
-        this.#persist();
+        this.#persist(); 
     }
 
     delete(table, id) {
