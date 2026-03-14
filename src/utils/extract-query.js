@@ -5,3 +5,6 @@ export function ExtractQuery(query) {
         return queryParams
     }, {})
 }
+
+
+
